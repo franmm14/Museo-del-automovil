@@ -1,0 +1,111 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                                                                               ║
+║                  🚀 GUÍA RÁPIDA: SUBIR A GITHUB EN 5 PASOS                  ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+
+⚡ 5 PASOS PARA PUBLICAR EN GITHUB
+═════════════════════════════════════════════════════════════════════════════════
+
+
+PASO 1: CREAR REPOSITORIO EN GITHUB
+────────────────────────────────────
+1. Abre: https://github.com/new
+2. Ingresa:
+   - Nombre: museo-autos-vr
+   - Descripción: Experiencia Virtual Interactiva 3D
+   - Visibilidad: Public
+3. Haz click: "Create repository"
+4. COPIA la URL que aparece (la que dice HTTPS)
+
+
+PASO 2: EJECUTAR EL SCRIPT (MÁS FÁCIL)
+──────────────────────────────────────
+1. Haz doble click en: push-github.bat
+2. Ingresa tu usuario de GitHub
+3. Ingresa el nombre del repo: museo-autos-vr
+4. Presiona "s" para confirmar
+5. ¡Listo! Se subirá automáticamente
+
+
+PASO 3: ALTERNATIVA - HACERLO MANUALMENTE
+──────────────────────────────────────────
+Si prefieres hacerlo por terminal:
+
+1. Abre PowerShell
+2. Ve a la carpeta del proyecto:
+   cd "c:\Users\Pacho\Documents\VR FRANCISCO"
+
+3. Ejecuta:
+   git remote set-url origin https://github.com/TU_USUARIO/museo-autos-vr.git
+
+4. Luego:
+   git push -u origin main
+
+5. Cuando pida contraseña:
+   - Usuario: tu_usuario_github
+   - Contraseña: Tu token de GitHub (no tu contraseña real)
+
+
+PASO 4: OBTENER TOKEN DE GITHUB (Si lo necesitas)
+─────────────────────────────────────────────────
+1. Ve a: https://github.com/settings/tokens
+2. Haz click: "Generate new token"
+3. Dale un nombre: "mi computadora"
+4. Marca: "repo" (acceso completo)
+5. Copia el token y úsalo como contraseña
+
+
+PASO 5: VERIFICAR EN GITHUB
+───────────────────────────
+1. Abre: https://github.com/TU_USUARIO/museo-autos-vr
+2. ¡Deberías ver todos tus archivos!
+3. Compartir enlace: https://github.com/TU_USUARIO/museo-autos-vr
+
+
+═════════════════════════════════════════════════════════════════════════════════
+
+
+✅ CHECKLIST RÁPIDO
+═════════════════════════════════════════════════════════════════════════════════
+
+□ Crear repositorio en GitHub (https://github.com/new)
+□ Copiar URL HTTPS del repositorio
+□ Ejecutar push-github.bat O comandos manuales
+□ Ingresar usuario y repositorio
+□ Verificar en GitHub que se subieron los archivos
+□ ¡Compartir tu proyecto! 🎉
+
+
+🎯 DESPUÉS DE SUBIR
+═════════════════════════════════════════════════════════════════════════════════
+
+OPCIONAL - Habilitar GitHub Pages (alojamiento web gratis):
+
+1. Abre tu repositorio en GitHub
+2. Ve a: Settings → Pages
+3. Selecciona: Branch main
+4. Guarda
+5. Tu sitio estará en: https://TU_USUARIO.github.io/museo-autos-vr
+
+¡Tu museo será accesible desde cualquier navegador en el mundo!
+
+
+💡 TIPS FINALES
+═════════════════════════════════════════════════════════════════════════════════
+
+✓ Usa el script push-github.bat para facilitar la vida
+✓ Reemplaza TU_USUARIO por tu usuario real de GitHub
+✓ El primer push tarda más, los siguientes son rápidos
+✓ Después puedes hacer cambios y hacer push con: git push
+✓ Mantén tu repositorio público para que otros lo usen
+
+
+═════════════════════════════════════════════════════════════════════════════════
+
+¡TU PROYECTO ESTÁ LISTO PARA PUBLICAR! 🚀🌟
+
+Simplemente sigue los 5 pasos y tendrás tu código en GitHub.
+
+═════════════════════════════════════════════════════════════════════════════════
