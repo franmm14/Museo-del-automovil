@@ -88,6 +88,28 @@
         margin-left: 8px;
         flex: 1;
       }
+      
+      #capture-btn {
+        background: #00CED1;
+        color: #000;
+        border: 2px solid #008B8B;
+        padding: 10px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 12px;
+        transition: all 0.3s ease;
+      }
+      
+      #capture-btn:hover {
+        background: #00B0D0;
+        transform: scale(1.05);
+        box-shadow: 0 0 10px #00CED1;
+      }
+      
+      #capture-btn:active {
+        transform: scale(0.98);
+      }
     </style>
   </head>
   <body>
@@ -121,13 +143,6 @@
           <div class="key-button" style="background: #6666FF; border-color: #0000EE;">1-8</div>
         </div>
         <div class="key-label">Seleccionar auto</div>
-      </div>
-      
-      <div class="control-group">
-        <div class="control-keys">
-          <div class="key-button" style="background: #00CED1; border-color: #008B8B;">C</div>
-        </div>
-        <div class="key-label">Captura 📸</div>
       </div>
 
     </div>
@@ -1101,8 +1116,12 @@
               Año: ${car.year}<br>
               Potencia: ${car.power}<br>
               Velocidad: ${car.speed}<br><br>
-              <em>${car.info}</em>
+              <em>${car.info}</em><br><br>
+              <button id="capture-btn" style="background: #00CED1; color: #000; border: 2px solid #008B8B; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold;">📸 Capturar</button>
             `;
+            
+            // Agregar evento al botón de captura
+            document.getElementById('capture-btn').addEventListener('click', takeScreenshot);
             
             // Hacer zoom a la cámara hacia el auto, y después encender las luces con efecto de exhibición
             if (carElement) {
