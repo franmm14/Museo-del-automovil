@@ -122,8 +122,14 @@
         </div>
         <div class="key-label">Seleccionar auto</div>
       </div>
+      
+      <div class="control-group">
+        <div class="control-keys">
+          <div class="key-button" style="background: #00FF00; border-color: #00CC00;">V</div>
+        </div>
+        <div class="key-label">Vista general</div>
+      </div>
     </div>
-
 
     <a-scene background="color: #1a1a1a">
 
@@ -922,13 +928,14 @@
             }
           }
           
-          // V: Vibración
-          if (e.key.toLowerCase() === 'v' && selectedCar) {
-            if (vibrationInterval) {
-              stopVibration();
-            } else {
-              startVibration(selectedCar);
-            }
+          // V: Vista general del museo
+          if (e.key.toLowerCase() === 'v') {
+            stopAutoTour();
+            stopAutoRotation();
+            stopVibration();
+            selectedCar = null;
+            viewOverall();
+            document.getElementById('car-info').innerHTML = '📍 VISTA GENERAL DEL MUSEO';
           }
           
           // T: Tour automático
@@ -1077,6 +1084,57 @@
             } else {
               // Zoom completado - ejecutar callback si existe
               if (callback) callback();
+            }
+          }
+          
+          animateCamera();
+        }
+
+        // Función para vista general del museo
+        function viewOverall() {
+          const playerEl = document.querySelector('[camera]').closest('a-entity');
+          
+          // Posición general que permite ver toda la exposición
+          const targetX = 0;
+          const targetY = 3.5;
+          const targetZ = 0;
+          
+          // Obtener posición actual
+          const startPosAttr = playerEl.getAttribute('position');
+          let startPos = {x: 0, y: 1.8, z: 10};
+          if (typeof startPosAttr === 'string') {
+            const parts = startPosAttr.split(' ');
+            startPos = {x: parseFloat(parts[0]), y: parseFloat(parts[1]), z: parseFloat(parts[2])};
+          } else {
+            startPos = startPosAttr;
+          }
+          
+          const duration = 1200; // 1.2 segundos
+          const startTime = Date.now();
+          
+          function animateCamera() {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing suave (ease-out)
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            
+            const newX = startPos.x + (targetX - startPos.x) * easeProgress;
+            const newY = startPos.y + (targetY - startPos.y) * easeProgress;
+            const newZ = startPos.z + (targetZ - startPos.z) * easeProgress;
+            
+            playerEl.setAttribute('position', `${newX} ${newY} ${newZ}`);
+            
+            if (progress < 1) {
+              requestAnimationFrame(animateCamera);
+            } else {
+              // Apagar todas las iluminaciones especiales y volver a iluminación general
+              Object.values(carLights).forEach(lightId => {
+                const light = document.getElementById(lightId);
+                if (light && lightId !== 'light-motor-main' && lightId !== 'light-motor-left' && lightId !== 'light-motor-right' && lightId !== 'light-motor-warm') {
+                  light.setAttribute('intensity', '0.5');
+                }
+              });
             }
           }
           
