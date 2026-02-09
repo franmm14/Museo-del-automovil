@@ -122,11 +122,6 @@
         </div>
         <div class="key-label">Seleccionar auto</div>
       </div>
-      
-      <div style="border-top: 1px solid #00FF00; margin-top: 12px; padding-top: 12px; font-size: 12px; color: #FFD700;">
-        🎵 Sonido ambiente al iniciar<br>
-        Motor al seleccionar auto
-      </div>
 
     </div>
 
@@ -617,19 +612,6 @@
 
       <!-- Script para interacción con autos -->
       <script>
-        // Crear contexto de audio
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        
-        // Función para reanudar AudioContext (requerido por navegadores modernos)
-        function resumeAudioContext() {
-          if (audioContext.state === 'suspended') {
-            audioContext.resume().then(() => {
-              console.log('✅ Contexto de audio reanudado');
-            }).catch(err => {
-              console.error('❌ Error al reanudar contexto:', err);
-            });
-          }
-        }
 
         // Variables de control
         let selectedCar = null;
@@ -644,11 +626,6 @@
         let autoVibratingCar = null;
         let vibrationInterval = null;
         let rotationInterval = null;
-
-        // Control de volumen ambiente
-        let ambientVolumeControl = 0.15;
-        let ambientPlaying = false;
-        let ambientOscillators = [];
 
         // Paleta de colores disponibles
         const colorPalette = [
@@ -694,70 +671,7 @@
           setTimeout(() => playSound(sound.freq3, 200), 250);
         }
 
-        // Función para reproducir sonido ambiente (música tipo museo suave)
-        function startAmbientSound() {
-          if (ambientPlaying) return;
-          
-          // Reanudar contexto de audio (requerido por navegadores modernos)
-          resumeAudioContext();
-          
-          // Crear múltiples osciladores para un sonido ambiente más rico
-          const baseFrequencies = [110, 165, 220]; // Do bajo
-          
-          baseFrequencies.forEach((freq, index) => {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.type = 'sine';
-            oscillator.frequency.value = freq;
-            
-            // Volumen atenuado para efecto ambiente
-            gainNode.gain.setValueAtTime(ambientVolumeControl / (index + 1), audioContext.currentTime);
-            
-            oscillator.start();
-            ambientOscillators.push({ oscillator, gainNode });
-          });
-          
-          ambientPlaying = true;
-          console.log('🎵 Sonido ambiente iniciado');
-        }
 
-        // Función para detener sonido ambiente
-        function stopAmbientSound() {
-          ambientOscillators.forEach(({ oscillator }) => {
-            oscillator.stop();
-          });
-          ambientOscillators = [];
-          ambientPlaying = false;
-          console.log('🔇 Sonido ambiente detenido');
-        }
-
-        // Función para cambiar volumen ambiente
-        function setAmbientVolume(volume) {
-          ambientVolumeControl = Math.max(0, Math.min(1, volume));
-          ambientOscillators.forEach(({ gainNode }, index) => {
-            gainNode.gain.setValueAtTime(ambientVolumeControl / (index + 1), audioContext.currentTime);
-          });
-        }
-
-        // Función de sonido de prueba para verificar que funciona
-        function playTestSound() {
-          resumeAudioContext();
-          const osc = audioContext.createOscillator();
-          const gain = audioContext.createGain();
-          osc.connect(gain);
-          gain.connect(audioContext.destination);
-          osc.frequency.value = 440;
-          osc.type = 'sine';
-          gain.gain.setValueAtTime(0.3, audioContext.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-          osc.start();
-          osc.stop(audioContext.currentTime + 0.2);
-          console.log('📢 Sonido de prueba reproducido');
-        }
 
         // Mapeo de autos a focos
         const carLights = {
@@ -962,14 +876,6 @@
         let currentColorIndex = 0;
         
         document.addEventListener('keydown', (e) => {
-          // Reanudar contexto de audio en primera interacción
-          resumeAudioContext();
-          
-          // Iniciar sonido ambiente en la primera interacción
-          if (!ambientPlaying) {
-            startAmbientSound();
-          }
-          
           keys[e.key.toLowerCase()] = true;
           
           // Seleccionar auto con teclas 1-8
@@ -1169,14 +1075,6 @@
 
         // Raycaster para detectar clicks en autos
         document.addEventListener('click', function(event) {
-          // Reanudar contexto de audio en primera interacción
-          resumeAudioContext();
-          
-          // Iniciar sonido ambiente en la primera interacción
-          if (!ambientPlaying) {
-            startAmbientSound();
-          }
-          
           const cameraEl = document.querySelector('[camera]');
           const raycaster = new THREE.Raycaster();
           const mouse = new THREE.Vector2(
@@ -1217,14 +1115,6 @@
 
         // Eventos táctiles para dispositivos móviles
         document.addEventListener('touchstart', (e) => {
-          // Reanudar contexto de audio en primera interacción
-          resumeAudioContext();
-          
-          // Iniciar sonido ambiente en la primera interacción
-          if (!ambientPlaying) {
-            startAmbientSound();
-          }
-          
           touchStartX = e.touches[0].clientX;
           touchStartY = e.touches[0].clientY;
         });
