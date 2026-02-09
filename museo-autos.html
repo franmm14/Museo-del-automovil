@@ -619,6 +619,17 @@
       <script>
         // Crear contexto de audio
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Función para reanudar AudioContext (requerido por navegadores modernos)
+        function resumeAudioContext() {
+          if (audioContext.state === 'suspended') {
+            audioContext.resume().then(() => {
+              console.log('✅ Contexto de audio reanudado');
+            }).catch(err => {
+              console.error('❌ Error al reanudar contexto:', err);
+            });
+          }
+        }
 
         // Variables de control
         let selectedCar = null;
@@ -687,6 +698,9 @@
         function startAmbientSound() {
           if (ambientPlaying) return;
           
+          // Reanudar contexto de audio (requerido por navegadores modernos)
+          resumeAudioContext();
+          
           // Crear múltiples osciladores para un sonido ambiente más rico
           const baseFrequencies = [110, 165, 220]; // Do bajo
           
@@ -727,6 +741,22 @@
           ambientOscillators.forEach(({ gainNode }, index) => {
             gainNode.gain.setValueAtTime(ambientVolumeControl / (index + 1), audioContext.currentTime);
           });
+        }
+
+        // Función de sonido de prueba para verificar que funciona
+        function playTestSound() {
+          resumeAudioContext();
+          const osc = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          osc.connect(gain);
+          gain.connect(audioContext.destination);
+          osc.frequency.value = 440;
+          osc.type = 'sine';
+          gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+          osc.start();
+          osc.stop(audioContext.currentTime + 0.2);
+          console.log('📢 Sonido de prueba reproducido');
         }
 
         // Mapeo de autos a focos
@@ -932,6 +962,9 @@
         let currentColorIndex = 0;
         
         document.addEventListener('keydown', (e) => {
+          // Reanudar contexto de audio en primera interacción
+          resumeAudioContext();
+          
           // Iniciar sonido ambiente en la primera interacción
           if (!ambientPlaying) {
             startAmbientSound();
@@ -1136,6 +1169,9 @@
 
         // Raycaster para detectar clicks en autos
         document.addEventListener('click', function(event) {
+          // Reanudar contexto de audio en primera interacción
+          resumeAudioContext();
+          
           // Iniciar sonido ambiente en la primera interacción
           if (!ambientPlaying) {
             startAmbientSound();
@@ -1181,6 +1217,9 @@
 
         // Eventos táctiles para dispositivos móviles
         document.addEventListener('touchstart', (e) => {
+          // Reanudar contexto de audio en primera interacción
+          resumeAudioContext();
+          
           // Iniciar sonido ambiente en la primera interacción
           if (!ambientPlaying) {
             startAmbientSound();
