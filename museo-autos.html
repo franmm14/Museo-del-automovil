@@ -1352,41 +1352,42 @@
         <!-- Techo de cristal -->
         <a-plane position="0 2.7 12" rotation="90 0 0" width="2.9" height="1" color="#ffffff" material="opacity: 0.1; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.15;"></a-plane>
         
-        <!-- ========== TRAJE DE PILOTO EN LA VITRINA ========== -->
+        <!-- ========== MOTOR EN LA VITRINA ========== -->
         
-        <!-- Maniquí - Cuerpo del traje -->
-        <a-box position="0 1.2 12" width="0.6" height="1.2" depth="0.3" color="#0055AA" material="metalness: 0.3; roughness: 0.6;"></a-box>
+        <!-- Bloque motor principal (V8) -->
+        <a-box position="0 1.2 12" width="1.2" height="1" depth="1.5" color="#1a1a1a" material="metalness: 0.85; roughness: 0.3;"></a-box>
         
-        <!-- Cuello/escote -->
-        <a-sphere radius="0.15" position="0 1.85 12" color="#FFB6C1" material="metalness: 0.2; roughness: 0.8;"></a-sphere>
+        <!-- Cilindro 1 (izq-ant) -->
+        <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="-0.4 1.5 11.3" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        <!-- Cilindro 2 (izq-post) -->
+        <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="-0.4 1.5 12.7" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        <!-- Cilindro 3 (der-ant) -->
+        <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="0.4 1.5 11.3" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        <!-- Cilindro 4 (der-post) -->
+        <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="0.4 1.5 12.7" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
         
-        <!-- Brazos izquierdo -->
-        <a-box position="-0.4 1.5 12" width="0.2" height="0.9" depth="0.25" color="#0055AA" material="metalness: 0.3; roughness: 0.6;"></a-box>
+        <!-- Culatas/Cabezas de cilindro - Detalles -->
+        <a-box position="-0.4 1.8 11.3" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
+        <a-box position="-0.4 1.8 12.7" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
+        <a-box position="0.4 1.8 11.3" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
+        <a-box position="0.4 1.8 12.7" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
         
-        <!-- Brazos derecho -->
-        <a-box position="0.4 1.5 12" width="0.2" height="0.9" depth="0.25" color="#0055AA" material="metalness: 0.3; roughness: 0.6;"></a-box>
+        <!-- Cigüeñal (eje central) -->
+        <a-cylinder radius="0.12" height="1.6" rotation="0 0 90" position="0 0.9 12" color="#555555" material="metalness: 0.95; roughness: 0.1;"></a-cylinder>
         
-        <!-- Guantes izquierdo -->
-        <a-sphere radius="0.12" position="-0.4 0.7 12" color="#FF8C00" material="metalness: 0.4; roughness: 0.5;"></a-sphere>
+        <!-- Volante/Polea -->
+        <a-torus radius="0.35" radius-tubular="0.1" position="0.9 1 12" color="#666666" material="metalness: 0.9; roughness: 0.15;"></a-torus>
         
-        <!-- Guantes derecho -->
-        <a-sphere radius="0.12" position="0.4 0.7 12" color="#FF8C00" material="metalness: 0.4; roughness: 0.5;"></a-sphere>
+        <!-- Radiador trasero -->
+        <a-box position="0 1.2 13.1" width="1.2" height="0.7" depth="0.2" color="#555555" material="metalness: 0.7; roughness: 0.3;"></a-box>
         
-        <!-- Deportes/Casco base (cilindro) -->
-        <a-cylinder radius="0.18" height="0.35" position="0 2.1 12" color="#1a1a1a" material="metalness: 0.8; roughness: 0.2;"></a-cylinder>
-        
-        <!-- Casco - Visera -->
-        <a-box position="0 2.25 11.7" width="0.35" height="0.25" depth="0.15" color="#FFD700" material="metalness: 0.95; roughness: 0.05;"></a-box>
-        
-        <!-- Banda distintiva azul en traje (cintura) -->
-        <a-plane position="0 1.2 12.16" width="0.65" height="0.3" color="#0099FF" material="emissive: #0099FF; emissiveIntensity: 0.3;"></a-plane>
-        
-        <!-- Número/Logo en pecho (detalles) -->
-        <a-plane position="0 1.5 11.85" width="0.35" height="0.35" color="#FFD700" material="emissive: #FFD700; emissiveIntensity: 0.4;"></a-plane>
+        <!-- Tuberías de escape (tubos pequeños) -->
+        <a-cylinder radius="0.08" height="0.6" rotation="90 0 0" position="-0.5 0.8 11.2" color="#b87333" material="metalness: 0.85; roughness: 0.25;"></a-cylinder>
+        <a-cylinder radius="0.08" height="0.6" rotation="90 0 0" position="0.5 0.8 11.2" color="#b87333" material="metalness: 0.85; roughness: 0.25;"></a-cylinder>
         
         <!-- Placa descriptiva -->
         <a-plane position="0 0.15 12" width="2.8" height="0.25" rotation="0 0 0" color="#FFD700" material="emissive: #FFD700; emissiveIntensity: 0.5;"></a-plane>
-        <a-text position="0 0.15 11.95" value="TRAJE DE PILOTO F1 - LEGADO DE VELOCIDAD" font-size="0.15" align="center" color="#000000"></a-text>
+        <a-text position="0 0.15 11.95" value="MOTOR V8 - CORAZÓN DEL AUTOMÓVIL" font-size="0.15" align="center" color="#000000"></a-text>
       </a-entity>
       
       <!-- Iluminación especial de la vitrina -->
