@@ -682,8 +682,7 @@
           'fast71': 'light-fast71',
           'lamborghini': 'light-lamborghini',
           'bugatti': 'light-bugatti',
-          'mclaren': 'light-mclaren',
-          'motor': 'light-motor-main'
+          'mclaren': 'light-mclaren'
         };
 
         // Función para rotar automáticamente el auto seleccionado
@@ -821,35 +820,19 @@
         function lightUpCar(carKey) {
           // Apagar todos los focos
           Object.keys(carLights).forEach(key => {
-            if (key !== 'motor') {
-              const lightId = carLights[key];
-              const light = document.getElementById(lightId);
-              if (light) {
-                light.setAttribute('intensity', '0.3');
-              }
+            const lightId = carLights[key];
+            const light = document.getElementById(lightId);
+            if (light) {
+              light.setAttribute('intensity', '0.3');
             }
           });
           
-          // Apagar las luces del motor
-          document.getElementById('light-motor-main')?.setAttribute('intensity', '0.8');
-          document.getElementById('light-motor-left')?.setAttribute('intensity', '0.5');
-          document.getElementById('light-motor-right')?.setAttribute('intensity', '0.5');
-          document.getElementById('light-motor-warm')?.setAttribute('intensity', '0.4');
-          
-          // Encender el foco del auto/motor seleccionado
-          if (carKey === 'motor') {
-            // Aumentar brillo de las luces del motor
-            document.getElementById('light-motor-main')?.setAttribute('intensity', '2.5');
-            document.getElementById('light-motor-left')?.setAttribute('intensity', '2');
-            document.getElementById('light-motor-right')?.setAttribute('intensity', '2');
-            document.getElementById('light-motor-warm')?.setAttribute('intensity', '1.8');
-          } else {
-            const lightId = carLights[carKey];
-            if (lightId) {
-              const light = document.getElementById(lightId);
-              if (light) {
-                light.setAttribute('intensity', '2.5');
-              }
+          // Encender el foco del auto seleccionado
+          const lightId = carLights[carKey];
+          if (lightId) {
+            const light = document.getElementById(lightId);
+            if (light) {
+              light.setAttribute('intensity', '2.5');
             }
           }
         }
@@ -1006,13 +989,6 @@
             power: '913 CV',
             speed: '350 km/h',
             info: 'Superdeportivo británico híbrido. Tecnología de F1 en carretera.'
-          },
-          'motor': {
-            name: 'MOTOR V8 - CORAZÓN DEL AUTOMÓVIL',
-            year: 'Histórico',
-            power: '400+ CV (típico)',
-            speed: 'Base de potencia',
-            info: 'Motor V8 de 8 cilindros en V. Configuración clásica de alta potencia. Diseño revolucionario que ha impulsado los mejores automóviles deportivos del mundo.'
           }
         };
 
@@ -1184,11 +1160,9 @@
                 const carKey = element.parent.dataset.car;
                 showCarInfo(carKey, element.parent);
                 
-                // Solo reproducir sonido y efectos para autos, no para el motor
-                if (carKey !== 'motor') {
-                  engineSound(carKey);
-                  createParticleEffect(element.parent);
-                }
+                // Reproducir sonido y efectos
+                engineSound(carKey);
+                createParticleEffect(element.parent);
               }
             }
           }
@@ -1197,7 +1171,7 @@
 
       <!-- ========== VITRINA DE EXHIBICIÓN CON MOTOR ========== -->
       
-      <a-entity data-car="motor" position="0 0 0">
+      <a-entity position="0 0 0">
         <!-- Base de la vitrina - Plataforma negra -->
         <a-box position="0 0.25 12" width="3.2" height="0.5" depth="3.2" color="#1a1a1a" material="metalness: 0.8; roughness: 0.2;"></a-box>
         
