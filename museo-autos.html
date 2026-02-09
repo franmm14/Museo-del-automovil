@@ -682,7 +682,8 @@
           'fast71': 'light-fast71',
           'lamborghini': 'light-lamborghini',
           'bugatti': 'light-bugatti',
-          'mclaren': 'light-mclaren'
+          'mclaren': 'light-mclaren',
+          'motor': 'light-motor-main'
         };
 
         // Función para rotar automáticamente el auto seleccionado
@@ -819,19 +820,36 @@
         // Función para controlar los focos
         function lightUpCar(carKey) {
           // Apagar todos los focos
-          Object.values(carLights).forEach(lightId => {
-            const light = document.getElementById(lightId);
-            if (light) {
-              light.setAttribute('intensity', '0.3');
+          Object.keys(carLights).forEach(key => {
+            if (key !== 'motor') {
+              const lightId = carLights[key];
+              const light = document.getElementById(lightId);
+              if (light) {
+                light.setAttribute('intensity', '0.3');
+              }
             }
           });
           
-          // Encender el foco del auto seleccionado
-          const lightId = carLights[carKey];
-          if (lightId) {
-            const light = document.getElementById(lightId);
-            if (light) {
-              light.setAttribute('intensity', '2.5');
+          // Apagar las luces del motor
+          document.getElementById('light-motor-main')?.setAttribute('intensity', '0.8');
+          document.getElementById('light-motor-left')?.setAttribute('intensity', '0.5');
+          document.getElementById('light-motor-right')?.setAttribute('intensity', '0.5');
+          document.getElementById('light-motor-warm')?.setAttribute('intensity', '0.4');
+          
+          // Encender el foco del auto/motor seleccionado
+          if (carKey === 'motor') {
+            // Aumentar brillo de las luces del motor
+            document.getElementById('light-motor-main')?.setAttribute('intensity', '2.5');
+            document.getElementById('light-motor-left')?.setAttribute('intensity', '2');
+            document.getElementById('light-motor-right')?.setAttribute('intensity', '2');
+            document.getElementById('light-motor-warm')?.setAttribute('intensity', '1.8');
+          } else {
+            const lightId = carLights[carKey];
+            if (lightId) {
+              const light = document.getElementById(lightId);
+              if (light) {
+                light.setAttribute('intensity', '2.5');
+              }
             }
           }
         }
@@ -997,6 +1015,13 @@
             power: '913 CV',
             speed: '350 km/h',
             info: 'Superdeportivo británico híbrido. Tecnología de F1 en carretera.'
+          },
+          'motor': {
+            name: 'MOTOR V8 - CORAZÓN DEL AUTOMÓVIL',
+            year: 'Histórico',
+            power: '400+ CV (típico)',
+            speed: 'Base de potencia',
+            info: 'Motor V8 de 8 cilindros en V. Configuración clásica de alta potencia. Diseño revolucionario que ha impulsado los mejores automóviles deportivos del mundo.'
           }
         };
 
@@ -1176,92 +1201,94 @@
 
       <!-- ========== VITRINA DE EXHIBICIÓN CON MOTOR ========== -->
       
-      <!-- Base de la vitrina - Plataforma negra -->
-      <a-box position="0 0.25 12" width="3.2" height="0.5" depth="3.2" color="#1a1a1a" material="metalness: 0.8; roughness: 0.2;"></a-box>
-      
-      <!-- Borde superior de la plataforma - Detalle dorado -->
-      <a-torus radius="1.65" radius-tubular="0.08" position="0 0.5 12" color="#FFD700" material="metalness: 1; roughness: 0.1; emissive: #FFD700; emissiveIntensity: 0.4;"></a-torus>
-      
-      <!-- Marco de la vitrina - Estructura de acero -->
-      <!-- Columna frontal izquierda -->
-      <a-cylinder radius="0.12" height="2.5" color="#333333" position="-1.45 1.5 11.5" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
-      <!-- Columna frontal derecha -->
-      <a-cylinder radius="0.12" height="2.5" color="#333333" position="1.45 1.5 11.5" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
-      <!-- Columna trasera izquierda -->
-      <a-cylinder radius="0.12" height="2.5" color="#333333" position="-1.45 1.5 12.5" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
-      <!-- Columna trasera derecha -->
-      <a-cylinder radius="0.12" height="2.5" color="#333333" position="1.45 1.5 12.5" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
-      
-      <!-- Vigas superiores -->
-      <a-box position="-1.45 2.6 12" width="0.15" height="0.15" depth="1" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-box>
-      <a-box position="1.45 2.6 12" width="0.15" height="0.15" depth="1" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-box>
-      <a-box position="0 2.6 11.5" width="3" width="0.15" height="0.15" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-box>
-      <a-box position="0 2.6 12.5" width="3" height="0.15" depth="0.15" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-box>
-      
-      <!-- Panel frontal de cristal - Transparente -->
-      <a-plane position="0 1.5 11.35" width="2.9" height="2.4" color="#ffffff" material="opacity: 0.15; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.1;"></a-plane>
-      
-      <!-- Panel trasero de cristal - Transparente -->
-      <a-plane position="0 1.5 12.65" width="2.9" height="2.4" color="#ffffff" material="opacity: 0.15; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.1;"></a-plane>
-      
-      <!-- Panel lateral izquierdo de cristal -->
-      <a-plane position="-1.6 1.5 12" rotation="0 90 0" width="1" height="2.4" color="#ffffff" material="opacity: 0.15; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.1;"></a-plane>
-      
-      <!-- Panel lateral derecho de cristal -->
-      <a-plane position="1.6 1.5 12" rotation="0 90 0" width="1" height="2.4" color="#ffffff" material="opacity: 0.15; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.1;"></a-plane>
-      
-      <!-- Techo de cristal -->
-      <a-plane position="0 2.7 12" rotation="90 0 0" width="2.9" height="1" color="#ffffff" material="opacity: 0.1; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.15;"></a-plane>
-      
-      <!-- ========== MOTOR EN LA VITRINA ========== -->
-      
-      <!-- Bloque motor principal (V8) -->
-      <a-box position="0 1.2 12" width="1.2" height="1" depth="1.5" color="#1a1a1a" material="metalness: 0.85; roughness: 0.3;"></a-box>
-      
-      <!-- Cilindro 1 (izq-ant) -->
-      <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="-0.4 1.5 11.3" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
-      <!-- Cilindro 2 (izq-post) -->
-      <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="-0.4 1.5 12.7" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
-      <!-- Cilindro 3 (der-ant) -->
-      <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="0.4 1.5 11.3" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
-      <!-- Cilindro 4 (der-post) -->
-      <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="0.4 1.5 12.7" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
-      
-      <!-- Culatas/Cabezas de cilindro - Detalles -->
-      <a-box position="-0.4 1.8 11.3" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
-      <a-box position="-0.4 1.8 12.7" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
-      <a-box position="0.4 1.8 11.3" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
-      <a-box position="0.4 1.8 12.7" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
-      
-      <!-- Cigüeñal (eje central) -->
-      <a-cylinder radius="0.12" height="1.6" rotation="0 0 90" position="0 0.9 12" color="#555555" material="metalness: 0.95; roughness: 0.1;"></a-cylinder>
-      
-      <!-- Volante/Polea -->
-      <a-torus radius="0.35" radius-tubular="0.1" position="0.9 1 12" color="#666666" material="metalness: 0.9; roughness: 0.15;"></a-torus>
-      
-      <!-- Radiador trasero -->
-      <a-box position="0 1.2 13.1" width="1.2" height="0.7" depth="0.2" color="#555555" material="metalness: 0.7; roughness: 0.3;"></a-box>
-      
-      <!-- Tuberías de escape (tubos pequeños) -->
-      <a-cylinder radius="0.08" height="0.6" rotation="90 0 0" position="-0.5 0.8 11.2" color="#b87333" material="metalness: 0.85; roughness: 0.25;"></a-cylinder>
-      <a-cylinder radius="0.08" height="0.6" rotation="90 0 0" position="0.5 0.8 11.2" color="#b87333" material="metalness: 0.85; roughness: 0.25;"></a-cylinder>
+      <a-entity data-car="motor" position="0 0 0">
+        <!-- Base de la vitrina - Plataforma negra -->
+        <a-box position="0 0.25 12" width="3.2" height="0.5" depth="3.2" color="#1a1a1a" material="metalness: 0.8; roughness: 0.2;"></a-box>
+        
+        <!-- Borde superior de la plataforma - Detalle dorado -->
+        <a-torus radius="1.65" radius-tubular="0.08" position="0 0.5 12" color="#FFD700" material="metalness: 1; roughness: 0.1; emissive: #FFD700; emissiveIntensity: 0.4;"></a-torus>
+        
+        <!-- Marco de la vitrina - Estructura de acero -->
+        <!-- Columna frontal izquierda -->
+        <a-cylinder radius="0.12" height="2.5" color="#333333" position="-1.45 1.5 11.5" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        <!-- Columna frontal derecha -->
+        <a-cylinder radius="0.12" height="2.5" color="#333333" position="1.45 1.5 11.5" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        <!-- Columna trasera izquierda -->
+        <a-cylinder radius="0.12" height="2.5" color="#333333" position="-1.45 1.5 12.5" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        <!-- Columna trasera derecha -->
+        <a-cylinder radius="0.12" height="2.5" color="#333333" position="1.45 1.5 12.5" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        
+        <!-- Vigas superiores -->
+        <a-box position="-1.45 2.6 12" width="0.15" height="0.15" depth="1" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-box>
+        <a-box position="1.45 2.6 12" width="0.15" height="0.15" depth="1" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-box>
+        <a-box position="0 2.6 11.5" width="3" width="0.15" height="0.15" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-box>
+        <a-box position="0 2.6 12.5" width="3" height="0.15" depth="0.15" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-box>
+        
+        <!-- Panel frontal de cristal - Transparente -->
+        <a-plane position="0 1.5 11.35" width="2.9" height="2.4" color="#ffffff" material="opacity: 0.15; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.1;"></a-plane>
+        
+        <!-- Panel trasero de cristal - Transparente -->
+        <a-plane position="0 1.5 12.65" width="2.9" height="2.4" color="#ffffff" material="opacity: 0.15; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.1;"></a-plane>
+        
+        <!-- Panel lateral izquierdo de cristal -->
+        <a-plane position="-1.6 1.5 12" rotation="0 90 0" width="1" height="2.4" color="#ffffff" material="opacity: 0.15; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.1;"></a-plane>
+        
+        <!-- Panel lateral derecho de cristal -->
+        <a-plane position="1.6 1.5 12" rotation="0 90 0" width="1" height="2.4" color="#ffffff" material="opacity: 0.15; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.1;"></a-plane>
+        
+        <!-- Techo de cristal -->
+        <a-plane position="0 2.7 12" rotation="90 0 0" width="2.9" height="1" color="#ffffff" material="opacity: 0.1; metalness: 1; roughness: 0.05; emissive: #4488ff; emissiveIntensity: 0.15;"></a-plane>
+        
+        <!-- ========== MOTOR EN LA VITRINA ========== -->
+        
+        <!-- Bloque motor principal (V8) -->
+        <a-box position="0 1.2 12" width="1.2" height="1" depth="1.5" color="#1a1a1a" material="metalness: 0.85; roughness: 0.3;"></a-box>
+        
+        <!-- Cilindro 1 (izq-ant) -->
+        <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="-0.4 1.5 11.3" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        <!-- Cilindro 2 (izq-post) -->
+        <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="-0.4 1.5 12.7" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        <!-- Cilindro 3 (der-ant) -->
+        <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="0.4 1.5 11.3" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        <!-- Cilindro 4 (der-post) -->
+        <a-cylinder radius="0.18" height="0.8" rotation="90 0 0" position="0.4 1.5 12.7" color="#333333" material="metalness: 0.9; roughness: 0.2;"></a-cylinder>
+        
+        <!-- Culatas/Cabezas de cilindro - Detalles -->
+        <a-box position="-0.4 1.8 11.3" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
+        <a-box position="-0.4 1.8 12.7" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
+        <a-box position="0.4 1.8 11.3" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
+        <a-box position="0.4 1.8 12.7" width="0.35" height="0.3" depth="0.3" color="#444444" material="metalness: 0.95; roughness: 0.15;"></a-box>
+        
+        <!-- Cigüeñal (eje central) -->
+        <a-cylinder radius="0.12" height="1.6" rotation="0 0 90" position="0 0.9 12" color="#555555" material="metalness: 0.95; roughness: 0.1;"></a-cylinder>
+        
+        <!-- Volante/Polea -->
+        <a-torus radius="0.35" radius-tubular="0.1" position="0.9 1 12" color="#666666" material="metalness: 0.9; roughness: 0.15;"></a-torus>
+        
+        <!-- Radiador trasero -->
+        <a-box position="0 1.2 13.1" width="1.2" height="0.7" depth="0.2" color="#555555" material="metalness: 0.7; roughness: 0.3;"></a-box>
+        
+        <!-- Tuberías de escape (tubos pequeños) -->
+        <a-cylinder radius="0.08" height="0.6" rotation="90 0 0" position="-0.5 0.8 11.2" color="#b87333" material="metalness: 0.85; roughness: 0.25;"></a-cylinder>
+        <a-cylinder radius="0.08" height="0.6" rotation="90 0 0" position="0.5 0.8 11.2" color="#b87333" material="metalness: 0.85; roughness: 0.25;"></a-cylinder>
+        
+        <!-- Placa descriptiva -->
+        <a-plane position="0 0.15 12" width="2.8" height="0.25" rotation="0 0 0" color="#FFD700" material="emissive: #FFD700; emissiveIntensity: 0.5;"></a-plane>
+        <a-text position="0 0.15 11.95" value="MOTOR V8 - CORAZÓN DEL AUTOMÓVIL" font-size="0.15" align="center" color="#000000"></a-text>
+      </a-entity>
       
       <!-- Iluminación especial de la vitrina -->
       <!-- Luz principal blanca -->
-      <a-light type="point" position="0 2.5 12" intensity="2" color="#ffffff" distance="3.5"></a-light>
+      <a-light id="light-motor-main" type="point" position="0 2.5 12" intensity="1.2" color="#ffffff" distance="3.5"></a-light>
       
       <!-- Luz neón azul izquierda -->
-      <a-light type="point" position="-1.8 1.8 12" intensity="1.5" color="#0088ff" distance="2"></a-light>
+      <a-light id="light-motor-left" type="point" position="-1.8 1.8 12" intensity="0.8" color="#0088ff" distance="2"></a-light>
       
       <!-- Luz neón azul derecha -->
-      <a-light type="point" position="1.8 1.8 12" intensity="1.5" color="#0088ff" distance="2"></a-light>
+      <a-light id="light-motor-right" type="point" position="1.8 1.8 12" intensity="0.8" color="#0088ff" distance="2"></a-light>
       
       <!-- Luz de ambiente cálida -->
-      <a-light type="point" position="0 1 12" intensity="1" color="#ffaa00" distance="2.5"></a-light>
-      
-      <!-- Placa descriptiva -->
-      <a-plane position="0 0.15 12" width="2.8" height="0.25" rotation="0 0 0" color="#FFD700" material="emissive: #FFD700; emissiveIntensity: 0.5;"></a-plane>
-      <a-text position="0 0.15 11.95" value="MOTOR V8 - CORAZÓN DEL AUTOMÓVIL" font-size="0.15" align="center" color="#000000"></a-text>
+      <a-light id="light-motor-warm" type="point" position="0 1 12" intensity="0.6" color="#ffaa00" distance="2.5"></a-light>
 
     </a-scene>
   </body>
