@@ -111,10 +111,9 @@
       
       <div class="control-group">
         <div class="control-keys">
-          <div class="key-button key-arrow">←</div>
-          <div class="key-button key-arrow">→</div>
+          <div class="key-button" style="background: #FF9900; border-color: #FF6600;">R</div>
         </div>
-        <div class="key-label">Cambiar color</div>
+        <div class="key-label">Rotar auto</div>
       </div>
       
       <div class="control-group">
@@ -853,9 +852,23 @@
           engineSound();
         }
 
-        // Función para rotar el auto - DESHABILITADA
-        function rotateCar(car) {
-          // Rotación deshabilitada según solicitud del usuario
+        // Función para rotar manualmente el auto con las flechas
+        function rotateCar(car, direction) {
+          if (!car) return;
+          
+          const currentRotation = car.getAttribute('rotation');
+          let rotY = 0;
+          
+          if (currentRotation) {
+            const parts = currentRotation.split(' ');
+            rotY = parseFloat(parts[1]) || 0;
+          }
+          
+          // direction: 1 para derecha (clockwise), -1 para izquierda (counterclockwise)
+          rotY += direction * 5; // 5 grados por pulsación
+          
+          car.setAttribute('rotation', `0 ${rotY} 0`);
+          playSound(700, 100);
         }
 
         // Control de teclado para movimiento
@@ -914,14 +927,12 @@
             createParticleEffect(selectedCar);
           }
           
-          // Cambiar color con flechas izquierda y derecha
+          // Rotar el auto con flechas izquierda y derecha
           if (e.key === 'ArrowLeft' && selectedCar) {
-            currentColorIndex--;
-            changeCarColor(selectedCar, currentColorIndex);
+            rotateCar(selectedCar, -1); // Rotar a la izquierda (counterclockwise)
           }
           if (e.key === 'ArrowRight' && selectedCar) {
-            currentColorIndex++;
-            changeCarColor(selectedCar, currentColorIndex);
+            rotateCar(selectedCar, 1); // Rotar a la derecha (clockwise)
           }
         });
 
@@ -990,7 +1001,7 @@
         };
 
         // Función para hacer zoom a la cámara hacia el auto
-        function zoomToCamera(carElement) {
+        function zoomToCamera(carElement, callback) {
           const playerEl = document.querySelector('[camera]').closest('a-entity');
           const carPosAttr = carElement.getAttribute('position');
           
@@ -1038,6 +1049,9 @@
             
             if (progress < 1) {
               requestAnimationFrame(animateCamera);
+            } else {
+              // Zoom completado - ejecutar callback si existe
+              if (callback) callback();
             }
           }
           
@@ -1055,12 +1069,13 @@
               Velocidad: ${car.speed}<br><br>
               <em>${car.info}</em>
             `;
-            // Encender el foco del auto seleccionado
-            lightUpCar(carKey);
             
-            // Hacer zoom a la cámara hacia el auto
+            // Hacer zoom a la cámara hacia el auto, y después encender las luces con efecto de exhibición
             if (carElement) {
-              zoomToCamera(carElement);
+              zoomToCamera(carElement, () => {
+                // Callback ejecutado cuando termina el zoom
+                lightUpCar(carKey);
+              });
             }
           }
         }
