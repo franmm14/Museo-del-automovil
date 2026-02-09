@@ -122,6 +122,20 @@
         </div>
         <div class="key-label">Seleccionar auto</div>
       </div>
+      
+      <div class="control-group">
+        <div class="control-keys">
+          <div class="key-button" style="background: #FF1493; border-color: #C71585;">P</div>
+        </div>
+        <div class="key-label">Partículas</div>
+      </div>
+      
+      <div class="control-group">
+        <div class="control-keys">
+          <div class="key-button" style="background: #00CED1; border-color: #008B8B;">C</div>
+        </div>
+        <div class="key-label">Captura 📸</div>
+      </div>
 
     </div>
 
@@ -855,6 +869,33 @@
           engineSound();
         }
 
+        // Función para capturar pantalla/screenshot
+        function takeScreenshot() {
+          const scene = document.querySelector('a-scene');
+          const canvas = scene.renderer.domElement;
+          
+          // Crear link para descargar
+          canvas.toBlob(blob => {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+            link.href = url;
+            link.download = `museo-automovil-${timestamp}.png`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            // Mostrar confirmación
+            const carInfo = document.getElementById('car-info');
+            const originalText = carInfo.innerHTML;
+            carInfo.innerHTML = '📸 ¡Foto capturada!';
+            setTimeout(() => {
+              carInfo.innerHTML = originalText;
+            }, 1500);
+            
+            console.log('📸 Screenshot guardado como: ' + link.download);
+          }, 'image/png', 0.95);
+        }
+
         // Función para rotar manualmente el auto con las flechas
         function rotateCar(car, direction) {
           if (!car) return;
@@ -919,6 +960,11 @@
           // P: Partículas
           if (e.key.toLowerCase() === 'p' && selectedCar) {
             createParticleEffect(selectedCar);
+          }
+          
+          // C: Captura de pantalla
+          if (e.key.toLowerCase() === 'c') {
+            takeScreenshot();
           }
           
           // Rotar el auto con flechas izquierda y derecha
