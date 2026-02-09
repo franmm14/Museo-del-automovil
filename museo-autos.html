@@ -1094,10 +1094,10 @@
         function viewOverall() {
           const playerEl = document.querySelector('[camera]').closest('a-entity');
           
-          // Posición general que permite ver toda la exposición
-          const targetX = 0;
-          const targetY = 3.5;
-          const targetZ = 0;
+          // Posición general que permite ver toda la exposición con perspectiva panorámica
+          const targetX = -2;
+          const targetY = 4;
+          const targetZ = -3;
           
           // Obtener posición actual
           const startPosAttr = playerEl.getAttribute('position');
